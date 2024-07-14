@@ -44,20 +44,22 @@ public class MemberService {
     }
 
     public Map<String, String> login(MemberDTO memberDTO) {
+        System.out.println("[MemberService] login()");
         memberValidation.loginValidation(memberDTO);
 
-        Member member = convertDTOToMember(memberDTO);
-        String token = jwtUtil.generateToken(member.getEmail());
+        String token = jwtUtil.generateToken(memberDTO.getEmail());
         return responseToken(token);
     }
 
     public Map<String, String> responseToken(String token) {
+        System.out.println("[MemberService] responseToken()");
         Map<String, String> response = new HashMap<>();
         response.put("token", token);
         return response;
     }
 
     public Member convertDTOToMember(MemberDTO memberDTO) {
+        System.out.println("[MemberService] convertDTOToMember()");
         return new Member(
                 memberDTO.getEmail(),
                 passwordEncoder.encode(memberDTO.getPassword())
